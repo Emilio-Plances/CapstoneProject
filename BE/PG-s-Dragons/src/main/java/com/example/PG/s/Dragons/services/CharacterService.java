@@ -106,4 +106,5 @@ public class CharacterService {
         character.setImage(characterRequest.getImage());
         return character;
     }
+
 }

@@ -12,6 +12,7 @@ import com.example.PG.s.Dragons.requests.userRequests.RegisterRequest;
 import com.example.PG.s.Dragons.responses.DefaultResponse;
 import com.example.PG.s.Dragons.responses.LoginResponse;
 import com.example.PG.s.Dragons.security.JwtTools;
+import com.example.PG.s.Dragons.services.CharacterService;
 import com.example.PG.s.Dragons.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -34,6 +35,8 @@ import java.util.HashMap;
 public class UserController{
     @Autowired
     private UserService userService;
+    @Autowired
+    private CharacterService characterService;
     @Autowired
     private JavaMailSenderImpl jms;
     @Autowired
@@ -99,6 +102,16 @@ public class UserController{
         User user = userService.upload(id, (String)cloudinary.uploader().upload(file.getBytes(), new HashMap()).get("url"));
         return DefaultResponse.full("Image uploaded", user, HttpStatus.OK);
     }
+    @PatchMapping("/users/{id}/addPref")
+    public ResponseEntity<DefaultResponse> addPref(@PathVariable long id,@RequestParam long charId) throws NotFoundException {
+        userService.addPref(id,characterService.findById(charId));
+        return DefaultResponse.noObject("ok",HttpStatus.OK);
+    }
+    @PatchMapping("/users/{id}/removePref")
+    public ResponseEntity<DefaultResponse> removePref(@PathVariable long id,@RequestParam long charId) throws NotFoundException{
+        userService.removePref(id,characterService.findById(charId));
+        return DefaultResponse.noObject("ok",HttpStatus.OK);
+    }
     @GetMapping("/noAuth/users")
     public ResponseEntity<DefaultResponse> getAll(){
         return DefaultResponse.noMessage(userService.findAll(),HttpStatus.OK);
@@ -106,6 +119,10 @@ public class UserController{
     @GetMapping("/noAuth/users/{id}")
     public ResponseEntity<DefaultResponse> getUserById(@PathVariable long id) throws NotFoundException {
         return DefaultResponse.noMessage(userService.findById(id),HttpStatus.OK);
+    }
+    @GetMapping("users/{id}/getPref")
+    public ResponseEntity<DefaultResponse> getPref(@PathVariable long id) throws NotFoundException {
+        return DefaultResponse.noMessage(userService.getPref(id),HttpStatus.OK);
     }
     @GetMapping("/noAuth/users/param")
     public ResponseEntity<DefaultResponse> getUserByUsername(@RequestParam String username) throws NotFoundException {
@@ -120,6 +137,7 @@ public class UserController{
         userService.delete(id);
         return DefaultResponse.noObject("User deleted!",HttpStatus.OK);
     }
+
     private void sendEmail(RegisterRequest user){
         SimpleMailMessage mail=new SimpleMailMessage();
         String message="Dear "+user.getName()+" "+ user.getSurname()+",\n" +
@@ -136,4 +154,5 @@ public class UserController{
         mail.setText(message);
         jms.send(mail);
     }
+
 }

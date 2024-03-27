@@ -73,4 +73,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void addPref(Character charId){
+        preferred.add(charId);
+    }
+    public void removePref(Character character){
+        preferred.remove(character);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.PG.s.Dragons.services;
 
+import com.example.PG.s.Dragons.entities.Character;
 import com.example.PG.s.Dragons.entities.User;
 import com.example.PG.s.Dragons.enums.Role;
 import com.example.PG.s.Dragons.exceptions.NotFoundException;
@@ -73,5 +74,19 @@ public class UserService {
     }
     public List<User> searchByPublicUsername(String publicUsername){
         return userRepository.searchByPublicUsername(publicUsername);
+    }
+    public void addPref(long id, Character character) throws NotFoundException {
+        User user=findById(id);
+        user.addPref(character);
+        userRepository.save(user);
+    }
+    public void removePref(long id, Character character) throws NotFoundException {
+        User user=findById(id);
+        user.removePref(character);
+        userRepository.save(user);
+    }
+    public List<Character> getPref(long id) throws NotFoundException {
+        User user=findById(id);
+        return user.getPreferred();
     }
 }

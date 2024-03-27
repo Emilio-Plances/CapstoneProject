@@ -1,0 +1,25 @@
+#add-char{
+  cursor: pointer;
+  text-align: center;
+  line-height: 39px;
+  height: 40px;
+  width: 40px;
+  position:fixed;
+  right: 10px;
+  bottom:55px;
+  font-size: 1.5em;
+  z-index: 2;
+}
+#delete{
+  background-color: transparent;
+  border:none;
+  text-decoration: underline;
+  padding:0
+}
+.box{
+  margin:0 5px;
+  font-size: 1em;
+  .buttons{
+    margin-top:24px
+  }
+}

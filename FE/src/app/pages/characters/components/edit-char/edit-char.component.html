@@ -1,0 +1,96 @@
+<form class="container mt-3" *ngIf="!loading&&!stop">
+  <div class="row justify-content-evenly align-items-center">
+    <div class="d-flex align-items-center col-7 p-0">
+      <label for="name">Name:</label>
+      <input class="m-1 form-control pe-0" id="name" type="text" name="name" [(ngModel)]="char.name">
+    </div>
+    <div class="form-check-reverse form-switch col-4">
+      <label class="form-check-label"  for="flexSwitchCheckReverse">{{char.status}}</label>
+      <input [checked]="char.status=='Public'" class="form-check-input" type="checkbox" (change)="changeStatus()" role="switch" id="flexSwitchCheckDefault" name="status">
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 text-center">
+    <p *ngIf="char.hp" class="m-0">HP: {{char.hp}}</p>
+    <p *ngIf="char.dice" class="m-0">Dice: {{char.dice}}</p>
+  </div>
+
+  <div>
+    <div class="d-flex align-items-center mt-2">
+      <label for="race">Race:</label>
+      <select class="ms-2 form-control" name="race" id="race" [(ngModel)]="char.race">
+        <option *ngFor="let race of races" [hidden]="race=='null'" [disabled]="race=='null'" [selected]="race=='null'" [value]="race">{{race.replace("_"," ").replace("null","None")}}</option>
+      </select>
+    </div>
+    <div class="d-flex align-items-center mt-2">
+      <label for="pgClass">Class:</label>
+      <select class="ms-2 form-control" name="pgClass" id="pgClass" (change)="setClass()" [(ngModel)]="char.pgClass[0]">
+        <option *ngFor="let class of classes" [hidden]="class=='null'" [disabled]="class=='null'" [selected]="class=='null'" [value]="class">{{class.replace("_"," ").replace("null","None")}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-6 text-center">
+      <label for="strenght">Strenght:</label>
+      <input (change)="mod('str')" class="ms-2 form-control text-center" id="strenght" type="number" name="strenght" [(ngModel)]="char.strenght">
+    </div>
+    <div class="col-6 text-center">
+      <label for="dexterity">Dexterity:</label>
+      <input (change)="mod('dex')" class="ms-2 form-control text-center" id="dexterity" type="number" name="dexterity" [(ngModel)]="char.dexterity">
+    </div>
+    <div class="col-6 text-center">
+      <label for="constitution">Constitution:</label>
+      <input (change)="mod('con')" class="ms-2 form-control text-center" id="constitution" type="number" name="constitution" [(ngModel)]="char.constitution">
+    </div>
+    <div class="col-6 text-center">
+      <label for="intelligence">Intelligence:</label>
+      <input (change)="mod('int')" class="ms-2 form-control text-center" id="intelligence" type="number" name="intelligence" [(ngModel)]="char.intelligence">
+    </div>
+    <div class="col-6 text-center">
+      <label for="charisma">Charisma:</label>
+      <input (change)="mod('cha')" class="ms-2 form-control text-center" id="charisma" type="number" name="charisma" [(ngModel)]="char.charisma">
+    </div>
+    <div class="col-6 text-center">
+      <label for="wisdom">Wisdom:</label>
+      <input (change)="mod('wis')" class="ms-2 form-control text-center" id="wisdom" type="number" name="wisdom" [(ngModel)]="char.wisdom">
+    </div>
+  </div>
+
+  <div *ngIf="spells.length!=0" class="mt-3 mb-2">
+    <div id="spell-lvl">
+      <div class="d-flex mb-2 justify-content-between align-items-start align-items-center">
+        <div class="d-flex align-items-center">
+          <button (click)="spellLvl=spellLvl>0?spellLvl-1:0;filter()">-</button>
+          <p class="m-0 mx-2">Level: {{spellLvl}}</p>
+          <button (click)="spellLvl=spellLvl<9?spellLvl+1:9;filter()">+</button>
+        </div>
+        <div>
+          <button id="my-spells-button" type="button" class="btn bg-grey text-red fw-bold" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample">
+            <p class="m-0">Cantrips: {{cantrips}}/{{totalCantrips}}</p>
+            <p class="m-0">Spells: {{numberSpells}}/{{totalNumberSpells}}</p>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div class="bg-white" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="p-2" *ngFor="let spell of selectedSpells">
+            <app-check-spell [spell]="spell" [charSpell]="spellsId"
+            (spellAction)="spellAction($event)"
+            (cantripAction)="cantripAction($event)"></app-check-spell>
+          </div>
+        </div>
+      </div>
+      <div id="spell-div" class="p-2" *ngIf="spells.length!=0">
+        <div class="mb-2" *ngFor="let spell of filteredSpells">
+          <app-check-spell [spell]="spell" [charSpell]="spellsId"
+          (spellAction)="spellAction($event)"
+          (cantripAction)="cantripAction($event)"
+          ></app-check-spell>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="confirm" (click)="save()" class="bg-success text-white" [disabled]="loading"><i class="bi bi-check-lg"></i></button>
+</form>

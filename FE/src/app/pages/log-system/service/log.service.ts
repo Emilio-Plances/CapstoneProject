@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { BehaviorSubject, map, Observable, tap } from "rxjs";
 import { environment } from "../../../../environments/environment.development";
-import { IUserList } from "../../../interfaces/iresponselist";
+import { ICharacterList, IUserList } from "../../../interfaces/iresponselist";
 
 
 import { IUserAuth, IUserResponse } from "../../../interfaces/iresponses";
@@ -87,6 +87,15 @@ export class LogService {
   getByrealUsername(username:string,):Observable<IUserResponse> {
     return this.http.get<IUserResponse>(`${this.noLogUserURL}/param?username=${username}`);
   }
+  getPref(id:number):Observable<ICharacterList> {
+    return this.http.get<ICharacterList>(`${this.logUserURL}/${id}/getPref`);
+  }
+  addPref(id:number,charId:number):Observable<IUserResponse> {
+    return this.http.patch<IUserResponse>(`${this.logUserURL}/${id}/addPref?charId=${charId}`,charId);
+  }
+  removePref(id:number,charId:number):Observable<IUserResponse> {
+    return this.http.patch<IUserResponse>(`${this.logUserURL}/${id}/removePref?charId=${charId}`,charId);
+  }
   edit(auth:IUserAuth):Observable<IUserResponse> {
     return this.http.patch<IUserResponse>(`${this.logUserURL}/${auth.user.id}`,auth.user)
     .pipe(tap(()=>{
@@ -105,4 +114,5 @@ export class LogService {
   deleteUser(id:number):Observable<IUserResponse>{
     return this.http.delete<IUserResponse>(`${this.logUserURL}/${id}`);
   }
+
 }

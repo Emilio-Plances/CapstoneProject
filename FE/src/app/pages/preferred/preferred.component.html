@@ -1,0 +1,9 @@
+<div *ngIf="characters.length" class="container mt-3" >
+  <h2 class="text-red text-center">Preferred</h2>
+  <div *ngFor="let char of characters">
+    <app-characterblock class="mb-3" [char]="char"></app-characterblock>
+  </div>
+</div>
+<div *ngIf="!characters.length" class="mt-5">
+  <h2 class="text-red text-center">You don't have any pref!</h2>
+</div>

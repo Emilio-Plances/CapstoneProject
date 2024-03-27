@@ -22,4 +22,6 @@ public interface CharacterRepository extends JpaRepository<Character,Long>{
     List<Character> findByUserId(long id);
     @Query("SELECT c FROM Character c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))AND c.status=Public ORDER BY c.name ASC")
     List<Character> searchByName(String name);
+    @Query("SELECT c FROM Character c ORDER BY SIZE(c.preferredUsers) DESC")
+    List<Character> orderByPref();
 }

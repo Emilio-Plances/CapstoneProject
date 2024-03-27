@@ -106,5 +106,7 @@ public class CharacterService {
         character.setImage(characterRequest.getImage());
         return character;
     }
-
+    public List<Character> findAllByPref(){
+        return characterRepository.orderByPref();
+    }
 }

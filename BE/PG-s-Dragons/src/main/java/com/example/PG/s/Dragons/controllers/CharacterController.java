@@ -48,6 +48,10 @@ public class CharacterController {
     public ResponseEntity<DefaultResponse> getById(@PathVariable long id) throws NotFoundException {
         return DefaultResponse.noMessage(characterService.findById(id),HttpStatus.OK);
     }
+    @GetMapping("/noAuth/characters/pref")
+    public ResponseEntity<DefaultResponse> getOrderedByPref() {
+        return DefaultResponse.noMessage(characterService.findAllByPref(),HttpStatus.OK);
+    }
     @GetMapping("/noAuth/characters/query")
     public ResponseEntity<DefaultResponse> filter(@RequestParam Optional<PgClass> optionalPgClass, @RequestParam Optional<Race> optionalRace){
         if(optionalPgClass.isPresent()&&optionalRace.isPresent()) return DefaultResponse.noMessage(characterService.filterByRaceAndClass(optionalRace.get(),optionalPgClass.get()),HttpStatus.OK);

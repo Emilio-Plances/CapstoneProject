@@ -49,12 +49,15 @@ export class NoEditComponent {
     if(!this.char) return;
     this.ls.addPref(this.user.id,this.char.id).subscribe(()=>{
       this.preferred=true;
+      this.char?.preferredUsers.push(this.user);
     });
   }
   removePref(){
     if(!this.char) return;
     this.ls.removePref(this.user.id,this.char.id).subscribe(()=>{
       this.preferred=false;
+      if(!this.char) return;
+      this.char.preferredUsers=this.char.preferredUsers.filter(user=>user.id!=this.user.id);
     });
   }
 }

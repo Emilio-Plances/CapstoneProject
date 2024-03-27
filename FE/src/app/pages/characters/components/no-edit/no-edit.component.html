@@ -1,6 +1,7 @@
 <div *ngIf="!loading" class="container mt-3">
   <div class="justify-content-between">
-    <div *ngIf="logged" id="pref" class="text-red">
+    <div *ngIf="logged" id="pref" class="text-red d-flex align-items-center">
+      <p class="mb-1 me-2">{{char?.preferredUsers?.length}}</p>
       <i (click)="addPref()" *ngIf="!preferred" class="bi bi-heart"></i>
       <i (click)="removePref()" *ngIf="preferred" class="bi bi-heart-fill"></i>
     </div>

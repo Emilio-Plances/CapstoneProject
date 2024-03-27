@@ -10,7 +10,8 @@ import { ICharacter } from '../../interfaces/i-character';
 })
 export class PreferredComponent {
   user!:IUser
-  characters:ICharacter[]=[]
+  characters:ICharacter[]=[];
+
   constructor(
     private ls:LogService
   ){}
@@ -20,5 +21,10 @@ export class PreferredComponent {
       this.user=auth.user;
       this.ls.getPref(this.user.id).subscribe(data=>this.characters=data.response)
     })
+  }
+
+  removePref(event:Event,charId:number){
+    event.stopPropagation();
+    this.ls.removePref(this.user.id,charId).subscribe(()=>this.characters=this.characters.filter(el=>el.id!=charId));
   }
 }

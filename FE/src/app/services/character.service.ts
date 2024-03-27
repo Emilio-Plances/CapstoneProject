@@ -1,3 +1,4 @@
+import { NoLogGuard } from './../guards/noLog.guard';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -23,6 +24,9 @@ export class CharacterService {
   }
   getPublic():Observable<ICharacterList>{
     return this.http.get<ICharacterList>(`${this.noLogcharacterURL}/public`);
+  }
+  getOrderedByPref():Observable<ICharacterList>{
+    return this.http.get<ICharacterList>(`${this.noLogcharacterURL}/pref`);
   }
   searchByName(name:string):Observable<ICharacterList>{
     return this.http.get<ICharacterList>(`${this.noLogcharacterURL}/name?name=${name}`);

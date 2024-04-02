@@ -28,14 +28,14 @@
         <li class="text-start"><a id="home" class="link" routerLink="/home" (click)="show=!show">Home</a></li>
         <li class="text-start"><a class="link" routerLink="/characters" (click)="show=!show">My Characters</a></li>
         <li class="text-start"><a class="link" routerLink="/preferred" (click)="show=!show">Preferred</a></li>
-        <li class="text-start"><a class="link" routerLink="/characters" (click)="show=!show">Helps</a></li>
+        <li class="text-start"><a class="link" routerLink="/credits" (click)="show=!show">Credits</a></li>
       </ul>
     </div>
   </div>
 
   <div id="login-ball" *ngIf="!logSystem" class="rounded-circle text-center border-red">
     <a class="nav-link" *ngIf="!logged" routerLink="/logSystem/login"><i class="bi bi-person"></i></a>
-    <div *ngIf="logged" ngbDropdown placement="top-start">
+    <div *ngIf="logged" ngbDropdown placement="top-end">
       <div class="rounded-circle" id="dropdownBasic2" ngbDropdownToggle><i class="bi bi-person-fill"></i></div>
       <div id="dropdown" ngbDropdownMenu aria-labelledby="dropdownBasic2">
         <a (click)="logout()" ngbDropdownItem>Logout</a>

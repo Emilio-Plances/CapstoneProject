@@ -1,3 +1,5 @@
+@import "../../../colors";
+
 #add-char{
   cursor: pointer;
   text-align: center;
@@ -9,6 +11,13 @@
   bottom:55px;
   font-size: 1.5em;
   z-index: 2;
+  border:1px solid $myRed;
+  @media (min-width: 768px) {
+    bottom: 10px;
+  }
+  &:active{
+    box-shadow: inset 0px 0px 10px 0px #000000;
+  }
 }
 #delete{
   background-color: transparent;
@@ -22,4 +31,7 @@
   .buttons{
     margin-top:24px
   }
+}
+#my-character{
+  margin:20px auto;
 }

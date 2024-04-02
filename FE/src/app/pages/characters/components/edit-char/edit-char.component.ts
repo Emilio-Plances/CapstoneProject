@@ -8,6 +8,7 @@ import { ISpell } from '../../../../interfaces/ispell';
 import { SpellService } from '../../../../services/spell.service';
 import { LogService } from '../../../log-system/service/log.service';
 import { IPutCharacterRequest } from '../../../../interfaces/irequest';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-edit-char',
@@ -38,7 +39,9 @@ export class EditCharComponent {
   timeout!:any;
   spellsId!:number[];
   request!:IPutCharacterRequest;
-  selectedSpells!:ISpell[]
+  selectedSpells!:ISpell[];
+  file!:File
+  linkFile:string|ArrayBuffer|null=null
 
   constructor(
     @Inject('Swal') private swal: any,
@@ -78,6 +81,17 @@ export class EditCharComponent {
       })
     })
   }
+  onFileSelected(event: any) {
+    this.linkFile=null;
+    this.file = event.target.files[0];
+    if(this.file){
+      const READER=new FileReader();
+      READER.onload=()=>{
+      this.linkFile = READER.result as string;
+    };
+    READER.readAsDataURL(this.file);
+  }
+}
   changeStatus(){
     if(this.char.status==Status.Private) this.char.status=Status.Public;
     else this.char.status=Status.Private
@@ -132,15 +146,15 @@ export class EditCharComponent {
         this.totalCantrips=2;
         break;
       case Classes.Cleric:
-        this.totalNumberSpells=1+this.modCha;
+        this.totalNumberSpells=1+this.modCha>=0?1+this.modCha:0;
         this.totalCantrips=3;
         break;
       case Classes.Druid:
-        this.totalNumberSpells=1+this.modWis;
+        this.totalNumberSpells=1+this.modWis>=0?1+this.modWis:0;
         this.totalCantrips=2;
         break;
       case Classes.Sorcerer:
-        this.totalNumberSpells=1+this.modInt;
+        this.totalNumberSpells=1+this.modInt>=0?1+this.modInt:0;
         this.totalCantrips=3;
         break;
       case Classes.Wizard:
@@ -233,16 +247,43 @@ export class EditCharComponent {
       return
     }
     this.request={...this.char,spellsId: this.spellsId};
-    this.cs.edit(this.request).subscribe(() =>{
-      this.swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: `Character updated!`,
-        showConfirmButton: false,
-        timer: 1500
-      }).then(()=>{
-        this.router.navigate(['/characters'])
+
+    if(this.file){
+      this.cs.upload(this.char.id, this.file)
+      .pipe(
+      catchError(error=>{
+        throw error;
+      }))
+      .subscribe(data=>{
+        if(!this.char)return
+        if(!data.response)return
+
+        this.request.image=data.response.image;
+
+        this.cs.edit(this.request).subscribe(()=>{
+          this.swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Character updated!`,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(()=>{
+            this.router.navigate(['/characters'])
+          })
+        })
       })
-    })
+    }else{
+      this.cs.edit(this.request).subscribe(() =>{
+        this.swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Character updated!`,
+          showConfirmButton: false,
+          timer: 1500
+        }).then(()=>{
+          this.router.navigate(['/characters'])
+        })
+      })
+    }
   }
 }

@@ -1,5 +1,4 @@
-<div [routerLink]="['/characters/noEdit',char.id]" class="box rounded bg-grey text-red p-2 justify-content-between mt-3 mb-2">
-  <ng-content select="#prefNumber"></ng-content>
+<div [routerLink]="['/characters/noEdit',char.id]" class="box rounded bg-grey text-red p-2 justify-content-between mb-3">
   <div class="d-flex p-2 justify-content-between">
     <div>
       <p class="m-0 p-0"><img class="rounded" [src]="char.image?char.image:'../../../assets/images/character-missing.png'" alt=""></p>
@@ -11,6 +10,7 @@
         <p class="m-0"><span class="fw-bold">{{printClass(char)}}</span></p>
         <p class="m-0"><span class="fw-bold">{{char.status}}</span></p>
       </div>
+      <ng-content select="#prefNumber"></ng-content>
       <ng-content select="#user"></ng-content>
       <ng-content select="#buttons"></ng-content>
     </div>

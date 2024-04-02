@@ -1,11 +1,13 @@
 <div *ngIf="characters.length" class="container mt-3" >
-  <h2 class="text-red text-center">Preferred</h2>
-  <div *ngFor="let char of characters">
-    <app-characterblock class="mb-3" [char]="char">
-      <div id="pref" class="text-red text-end">
-        <i (click)="removePref($event,char.id)" class="bi bi-heart-fill"></i>
-      </div>
-    </app-characterblock>
+  <div class="row">
+    <h2 class="text-red text-center">Preferred</h2>
+    <div *ngFor="let char of characters" class="mb-3 col-12 col-md-6 col-lg-4">
+      <app-characterblock class="mb-3b" [char]="char">
+        <div id="pref" class="text-red text-end">
+          <i (click)="removePref($event,char.id)" class="bi bi-heart-fill"></i>
+        </div>
+      </app-characterblock>
+    </div>
   </div>
 </div>
 <div *ngIf="!characters.length" class="mt-5">

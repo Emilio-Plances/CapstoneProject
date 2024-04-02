@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'search/:searchValue', loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule)},
   { path: 'spellDetails/:id', loadChildren: () => import('./pages/spell-details/spell-details.module').then(m => m.SpellDetailsModule)},
   { path: 'preferred', loadChildren: () => import('./pages/preferred/preferred.module').then(m => m.PreferredModule),canActivate: [LogGuard]},
+  { path: 'credits', loadChildren: () => import('./pages/credits/credits.module').then(m => m.CreditsModule) },
   { path: '**', component:Page404Component}
 ];
 

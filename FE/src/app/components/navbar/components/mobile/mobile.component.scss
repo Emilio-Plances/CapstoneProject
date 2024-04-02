@@ -38,13 +38,16 @@
   z-index: 2;
   background-color: $myGrey;
   color:$myRed;
+  &:active{
+    box-shadow: inset 0px 0px 10px 0px #000000;
+  }
 }
 .dropdown-toggle::after {
   display: none;
 }
 #dropdown{
   transform-origin: right top;
-  transform: translateX(-75%);
+  transform: translate(-103%,39%);
 }
 .height-0{
   overflow: hidden;
@@ -65,7 +68,4 @@
   @media (min-width:525px){
     display: flex;
   }
-}
-#login-ball:active{
-  box-shadow: inset 0px 0px 10px 0px #000000;
 }

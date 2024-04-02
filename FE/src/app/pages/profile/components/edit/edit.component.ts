@@ -86,16 +86,14 @@ export class EditComponent {
     this.user.info=this.form.value.info;
 
     if(this.file) {
-        if(!this.user) return
-        this.ls.upload(this.user.id, this.file)
-        .pipe(
-        catchError(error=>{
-        console.log(`Error`);
+      if(!this.user) return
+      this.ls.upload(this.user.id, this.file)
+      .pipe(
+      catchError(error=>{
         throw error;
       }))
-      .subscribe((data)=> {
+      .subscribe(data=> {
         if(!this.user)return
-        console.log("Success");
         if(!data.response)return
         this.user.linkPhoto=data.response.linkPhoto;
 

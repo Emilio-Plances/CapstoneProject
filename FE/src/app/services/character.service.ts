@@ -46,4 +46,9 @@ export class CharacterService {
   delete(id:number):Observable<ICharacterResponse>{
     return this.http.delete<ICharacterResponse>(`${this.logCharacterURL}/${id}`);
   }
+  upload(id:number,file:File):Observable<ICharacterResponse>{
+    const formData = new FormData();
+    formData.append('upload', file);
+    return this.http.patch<ICharacterResponse>(`${this.logCharacterURL}/${id}/upload`,formData);
+  }
 }

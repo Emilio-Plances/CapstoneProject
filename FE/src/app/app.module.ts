@@ -20,7 +20,7 @@ import { DesktopComponent } from './components/navbar/components/desktop/desktop
     NavbarComponent,
     Page404Component,
     MobileComponent,
-    DesktopComponent,
+    DesktopComponent
   ],
   imports: [
     BrowserModule,

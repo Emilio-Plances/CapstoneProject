@@ -35,4 +35,5 @@ export class CheckSpellComponent {
     if(this.spell.level==0) this.cantripAction.emit(this.spell.id);
     else this.spellAction.emit(this.spell.id);
   }
+
 }

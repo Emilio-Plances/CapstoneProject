@@ -6,7 +6,7 @@
       <i (click)="removePref()" *ngIf="preferred" class="bi bi-heart-fill"></i>
     </div>
     <div class="text-center">
-      <h1 class="fw-bold m-0">{{char?.name}}</h1>
+      <h1 class="fw-bold m-0 text-red mb-3">{{char?.name?char?.name:"Empty name"}}</h1>
       <p class="fs-6 fw-normal m-0"><i >{{char?.race}}</i> <i class="fs-6 fw-normal"> {{printClass()}}</i></p>
       <img id=char-img [src]="char?.image? char?.image:'../../../assets/images/character-missing.png'" alt="">
 
@@ -22,12 +22,12 @@
       <p><span class="fw-bold">Dice:</span> {{char?.dice}}</p>
     </div>
     <div class="stats row">
-      <app-stats [input]="char?.strenght" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Strenght</p></app-stats>
-      <app-stats [input]="char?.dexterity" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Dexterity</p></app-stats>
-      <app-stats [input]="char?.constitution" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Constitution</p></app-stats>
-      <app-stats [input]="char?.intelligence" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Intelligence</p></app-stats>
-      <app-stats [input]="char?.charisma" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Charisma</p></app-stats>
-      <app-stats [input]="char?.wisdom" class="col-6 px-1 mb-2"><p class="m-0 ms-1">Wisdom</p></app-stats>
+      <app-stats [input]="char?.strenght" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Strenght</p></app-stats>
+      <app-stats [input]="char?.dexterity" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Dexterity</p></app-stats>
+      <app-stats [input]="char?.constitution" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Constitution</p></app-stats>
+      <app-stats [input]="char?.intelligence" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Intelligence</p></app-stats>
+      <app-stats [input]="char?.charisma" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Charisma</p></app-stats>
+      <app-stats [input]="char?.wisdom" class="col-6 px-1 mb-2"><p class="m-0 ms-1 ms-lg-0">Wisdom</p></app-stats>
     </div>
   </div>
 </div>

@@ -1,7 +1,10 @@
 @import "../../../../../colors";
 #navbarMobile,#navbar,#menu-button{
   background-color: $myGrey;
-  border:none
+  border:none;
+  font-family: "Electrolize", sans-serif;
+  font-weight: bold;
+  font-style: normal;
 }
 #menu{
   color:$myRed;
